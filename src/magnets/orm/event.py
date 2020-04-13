@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, ReferenceField
+from mongoengine import Document, StringField, ReferenceField, ListField
 import uuid
 from magnets.orm.user import User
 
@@ -21,3 +21,8 @@ class Event(Document):
             'user_id': str(self.creator.id),
             'code': self.code
         }
+
+    def get_users(self):
+        from magnets.orm.user_event import UserEvent
+        user_events = UserEvent.objects.find(event_id=self.id)
+        return User.objects.filter(id__in=[user_event.user_id for user_event in user_events])

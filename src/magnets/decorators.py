@@ -15,9 +15,9 @@ def magnets_route(bp, route,  *args, methods=None, dump_as_json=True, **kwargs):
         def _wrapper(**wrapper_kwargs):
             arguments = {}
             if 'POST' in methods:
-                arguments.update(request.json)
+                arguments.update(request.json or {})
             if 'GET' in methods:
-                arguments.update(request.args)
+                arguments.update(request.args or {})
 
             try:
                 result = func(**wrapper_kwargs, **arguments)
