@@ -16,7 +16,8 @@ events_blueprint = Blueprint('events', __name__)
 @magnets_route(events_blueprint, '/', methods=['POST'])
 def create_event(user_id, name):
     user = utils.get_user_by_id(user_id)
-    Event.create(name=name, creator=user).save()
+    event = Event.create(name=name, creator=user).save()
+    return event.to_client_json()
 
 
 @magnets_route(events_blueprint, '/', methods=['GET'])
@@ -45,8 +46,9 @@ def create_photo(event_id, user_id):
     # TODO make sure it's an allowed extension
     file_name = f"{str(uuid.uuid4())}.{ext}"
     photo_file.save(os.path.join(UPLOAD_FOLDER, file_name))
-    Photo(
+    photo = Photo(
         creator=user,
         event=event,
         file_name=file_name
     ).save()
+    return photo.to_

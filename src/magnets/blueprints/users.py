@@ -15,6 +15,7 @@ users_blueprint = Blueprint('users', __name__)
 def create_user(uuid):
     user = User(uuid=uuid)
     user.save()
+    return user.to_client_json()
 
 
 @magnets_route(users_blueprint, '/', methods=['GET'])

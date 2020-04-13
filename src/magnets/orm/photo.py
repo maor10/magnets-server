@@ -9,3 +9,11 @@ class Photo(Document):
     creator = ReferenceField(User)
     event = ReferenceField(Event)
     file_name = StringField()
+
+    def to_client_json(self):
+        return {
+            'id': self.id,
+            'creator_id': self.creator.id,
+            'event_id': self.event.id,
+            'file_name': self.file_name,
+        }
