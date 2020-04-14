@@ -38,8 +38,9 @@ def get_event_by_code(code):
 
 
 @magnets_route(events_blueprint, '/<string:event_id>/photos', methods=['POST'])
-def create_photo(event_id, user_id):
-    user = utils.get_user_by_id(user_id)
+def create_photo(event_id):
+    user_id = request.form['user_id']
+    user = utils.get_user_by_id(user_id=user_id)
     event = utils.get_event_by_id(event_id)
     photo_file: FileStorage = request.files['file']
     ext = photo_file.filename.rsplit(".", 1)[1]
@@ -51,4 +52,4 @@ def create_photo(event_id, user_id):
         event=event,
         file_name=file_name
     ).save()
-    return photo.to_
+    return photo.to_client_json()
