@@ -5,6 +5,7 @@ from mongoengine import DoesNotExist, Document
 
 from magnets.exceptions import EntityNotFoundException
 from magnets.orm.event import Event
+from magnets.orm.photo import Photo
 from magnets.orm.user import User
 
 
@@ -37,10 +38,21 @@ def get_event_by_id(event_id: str) -> Event:
 
 def get_user_by_id(user_id: str) -> User:
     """
-    Get an event by a given id
+    Get a user by a given id
 
     :param user_id: of user
     :raises EntityNotFoundException
     :return: User
     """
     return get_object_by_field(User, 'id', ObjectId(user_id))
+
+
+def get_photo_by_id(photo_id: str) -> Photo:
+    """
+    Get a photo by a given id
+
+    :param photo_id: of photo
+    :raises EntityNotFoundException
+    :return: Photo
+    """
+    return get_object_by_field(Photo, 'id', ObjectId(photo_id))

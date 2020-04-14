@@ -15,5 +15,4 @@ class Photo(Document):
             'id': self.id,
             'creator_id': self.creator.id,
             'event_id': self.event.id,
-            'file_name': self.file_name,
         }
