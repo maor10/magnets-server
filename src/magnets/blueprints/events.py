@@ -38,9 +38,12 @@ def get_event_by_code(code):
 
 
 @magnets_route(events_blueprint, '/<string:event_id>/photos', methods=['GET'])
-def get_event_photos(event_id):
+def get_event_photos(event_id, user_id=None):
     event = utils.get_event_by_id(event_id)
-    return [photo.to_client_json() for photo in event.get_photos()]
+    filters = {'event': event}
+    if user_id is not None:
+        filters['creator'] = utils.get_user_by_id(user_id)
+    return [photo.to_client_json() for photo in Photo.objects(**filters)]
 
 
 @magnets_route(events_blueprint, '/<string:event_id>/photos', methods=['POST'])
