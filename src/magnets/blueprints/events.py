@@ -37,6 +37,12 @@ def get_event_by_code(code):
     return event.to_client_json()
 
 
+@magnets_route(events_blueprint, '/<string:event_id>/photos', methods=['GET'])
+def get_event_photos(event_id):
+    event = utils.get_event_by_id(event_id)
+    return [photo.to_client_json() for photo in event.get_photos()]
+
+
 @magnets_route(events_blueprint, '/<string:event_id>/photos', methods=['POST'])
 def create_photo(event_id):
     user_id = request.form['user_id']

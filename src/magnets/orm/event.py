@@ -26,3 +26,7 @@ class Event(Document):
         from magnets.orm.user_event import UserEvent
         user_events = UserEvent.objects.find(event_id=self.id)
         return User.objects.filter(id__in=[user_event.user_id for user_event in user_events])
+
+    def get_photos(self):
+        from magnets.orm.photo import Photo
+        return Photo.objects.filter(event=self)
