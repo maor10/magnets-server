@@ -12,7 +12,7 @@ class Photo(Document):
 
     def to_client_json(self):
         return {
-            'id': self.id,
-            'creator_id': self.creator.id,
-            'event_id': self.event.id,
+            'id': str(self.id),
+            'creator_id': str(self.creator.id),
+            'event_id': str(self.event.id),
         }
